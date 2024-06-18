@@ -33,28 +33,28 @@ std::wstring& trim(std::wstring& str)
 }
 
 
-
+const int MAX_PREFIX = 8;
 int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::wcout << L"Usage: BINApp [000000]" << std::endl
+		std::wcout << L"Usage: BINApp [00000000]" << std::endl
 			<< std::endl
-			<< L"Given the first 6 digits of a credit card number, this will attempt to identify the bank." << std::endl;
+			<< L"Given the first "<< MAX_PREFIX <<" digits of a credit card number, this will attempt to identify the bank." << std::endl;
 		return 1;
 	}
 
 	std::string arg1(argv[1]);
 	std::wstring creditCardNumber(arg1.begin(), arg1.end());
 
-	//If someone gives more than 6 digits, just take the first 6
-	if (creditCardNumber.size() > 6)
+	//If someone gives more than X digits, just take the first X
+	if (creditCardNumber.size() > MAX_PREFIX)
 	{
-		creditCardNumber = creditCardNumber.substr(0, 6);
+		creditCardNumber = creditCardNumber.substr(0, MAX_PREFIX);
 	}
-	if (creditCardNumber.size() != 6)
+	if (creditCardNumber.size() != MAX_PREFIX)
 	{
-		std::wcout << L"The first 6 digits of a credit card must be entered." << std::endl;
+		std::wcout << L"The first " << MAX_PREFIX << " digits of a credit card must be entered." << std::endl;
 		return 1;
 	}
 
@@ -80,8 +80,8 @@ int main(int argc, char** argv)
 	std::map<std::wstring, std::wstring> binMap;
 
 	int start = 0;
-	int minPrefix = 6;
-	int maxPrefix = 6;
+	int minPrefix = MAX_PREFIX;
+	int maxPrefix = MAX_PREFIX;
 	int end = wresourceString.find(L"\n");
 	std::wregex cardPrefixExpression(L"^[0-9]+$", std::regex_constants::ECMAScript | std::regex_constants::icase);
 	std::wregex numberRangeExpression(L"^([0-9]+)-([0-9]+)$", std::regex_constants::ECMAScript | std::regex_constants::icase);
@@ -190,14 +190,3 @@ int main(int argc, char** argv)
 
 
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

@@ -1,0 +1,9 @@
+.vs/
+x64/
+CPP/x64/
+CPP/BinApp/x64
+CS/BinLookup.net/obj
+CS/BinLookup.net/bin
+
+
+*.user
